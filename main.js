@@ -13,38 +13,35 @@ class Ship {
 
     displayNewPoints() {
         this.decrement();
-        return this.points;
+        return `${this.name} : ${this.points}`;
     }
 }
 
 const motherShip = new Ship("Mother Ship - Badass", 100, 9);
 const defenseShipOne = new Ship("Defense Ship 1", 80, 10);
-const defenseShipTwo = new Ship("Defense Ship 1", 80, 10);
-const defenseShipThree = new Ship("Defense Ship 1", 80, 10);
-const defenseShipFour = new Ship("Defense Ship 1", 80, 10);
-const defenseShipFive = new Ship("Defense Ship 1", 80, 10);
+const defenseShipTwo = new Ship("Defense Ship 2", 80, 10);
+const defenseShipThree = new Ship("Defense Ship 3", 80, 10);
+const defenseShipFour = new Ship("Defense Ship 4", 80, 10);
+const defenseShipFive = new Ship("Defense Ship 5", 80, 10);
+
 const ships = [motherShip, defenseShipOne, defenseShipTwo, defenseShipThree, defenseShipFour, defenseShipFive];
 
 let outputMotherShip = document.getElementById("output-mother-ship");
-
-let outputDefenseShipOne = document.getElementById("output-mother-ship-one");
+let outputDefenseShipOne = document.getElementById("output-defense-ship-one");
 let outputDefenseShipTwo = document.getElementById("output-defense-ship-two");
 let outputDefenseShipThree = document.getElementById("output-defense-ship-three");
 let outputDefenseShipFour = document.getElementById("output-defense-ship-four");
 let outputDefenseShipFive = document.getElementById("output-defense-ship-five");
 
 const display = () => {
-    // console.log(ships[0].displayNewPoints());
-    // console.log(ships[1].displayNewPoints());
-    // console.log(ships[2].displayNewPoints());
-    // console.log(ships[3].displayNewPoints());
-    // console.log(ships[4].displayNewPoints());
-    // console.log(ships[5].displayNewPoints());
     outputMotherShip.innerHTML = ships[0].displayNewPoints();
-    // output.innerHTML = ships[0].displayNewPoints();
-    // output.innerHTML = ships[0].displayNewPoints();
-    // output.innerHTML = ships[0].displayNewPoints();
-    // output.innerHTML = ships[0].displayNewPoints();
+    outputDefenseShipOne.innerHTML = ships[1].displayNewPoints();
+    outputDefenseShipTwo.innerHTML = ships[2].displayNewPoints();
+    outputDefenseShipThree.innerHTML = ships[3].displayNewPoints();
+    outputDefenseShipFour.innerHTML = ships[4].displayNewPoints();
+    outputDefenseShipFive.innerHTML = ships[5].displayNewPoints();
 }
+
+const random = Math.floor((Math.random() * ships.length());
 
 document.getElementById("attack").addEventListener("click", display);

@@ -1,18 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="./style.css">
-    <script src="./main.js" async defer></script>
+    <!-- <link rel="stylesheet" href="./style.css"> -->
+    <!-- <script src="./main.js" async defer></script> -->
     <title>Space ship game</title>
 
-    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+
+        h1 {
+            margin-top: 40px;
+            font-size: 50px;
+        }
+
+        button {
+            margin: 20px auto;
+            display: block;
+            padding: 20px 40px;
+            border: 2px solid black;
+            font-size: 24px;
+        }
+
+        p {
+            border: 1px solid black;
+        }
+
+        #ships {
+            height: 500px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+        }
+    </style>
+
 </head>
+
 <body>
-    <h1>Space invaders attacking Nology galaxy...press the button bellow to counter-attack and to destroy the invaders.</h1>
-    <div id="ships">
+    <h1>Space invaders attacking Nology galaxy...press the button bellow to counter-attack and to destroy the invaders.
+    </h1>
+    <div id="ships">Ships
         <p id="mother-ship"></p>
         <p id="output-mother-ship"></p>
 
@@ -33,6 +69,56 @@
     </div>
     <button id="attack">Attack</button>
 
+    <script>
+        class Ship {
+
+            constructor(name, points, pointsTaken) {
+                this.name = name;
+                this.points = points;
+                this.isAlive = true;
+                this.pointsTaken = pointsTaken
+            }
+
+            decrement() {
+                this.points = this.points - this.pointsTaken;
+            }
+
+            displayNewPoints() {
+                this.decrement();
+                return `${this.name} : ${this.points}`;
+            }
+        }
+
+        const motherShip = new Ship("Mother Ship - Badass", 100, 9);
+        const defenseShipOne = new Ship("Defense Ship 1", 80, 10);
+        const defenseShipTwo = new Ship("Defense Ship 2", 80, 10);
+        const defenseShipThree = new Ship("Defense Ship 3", 80, 10);
+        const defenseShipFour = new Ship("Defense Ship 4", 80, 10);
+        const defenseShipFive = new Ship("Defense Ship 5", 80, 10);
+
+        const ships = [motherShip, defenseShipOne, defenseShipTwo, defenseShipThree, defenseShipFour, defenseShipFive];
+
+        let outputMotherShip = document.getElementById("output-mother-ship");
+        let outputDefenseShipOne = document.getElementById("output-defense-ship-one");
+        let outputDefenseShipTwo = document.getElementById("output-defense-ship-two");
+        let outputDefenseShipThree = document.getElementById("output-defense-ship-three");
+        let outputDefenseShipFour = document.getElementById("output-defense-ship-four");
+        let outputDefenseShipFive = document.getElementById("output-defense-ship-five");
+
+        const display = () => {
+            outputMotherShip.innerHTML = ships[0].displayNewPoints();
+            outputDefenseShipOne.innerHTML = ships[1].displayNewPoints();
+            outputDefenseShipTwo.innerHTML = ships[2].displayNewPoints();
+            outputDefenseShipThree.innerHTML = ships[3].displayNewPoints();
+            outputDefenseShipFour.innerHTML = ships[4].displayNewPoints();
+            outputDefenseShipFive.innerHTML = ships[5].displayNewPoints();
+        }
+
+        // const random = Math.floor((Math.random() * ships.length()));
+
+        document.getElementById("attack").addEventListener("click", display);
+    </script>
 
 </body>
+
 </html>
