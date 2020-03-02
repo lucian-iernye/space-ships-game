@@ -123,6 +123,7 @@
             const randomPosition = Math.floor(Math.random() * ships.length);
             ships[randomPosition].displayNewPoints();
             if(ships[randomPosition].points <= 0) {
+                document.getElementById(`${ships[randomPosition].name}`).innerHTML = "";
                 ships.splice(randomPosition, 1);
             }
         }
