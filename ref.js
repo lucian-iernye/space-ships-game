@@ -101,7 +101,7 @@
             }
         }
 
-        const motherShip = new Ship("MotherShip", 100, 9);
+        const motherShip = new Ship("MotherShip", 1, 9);
 
         const defenseShipOne = new Ship("Defence-Ship-One", 80, 10);
         const defenseShipTwo = new Ship("Defence-Ship-Two", 80, 10);
@@ -123,9 +123,17 @@
         ships.forEach(ship => ship.displayNewPoints());
 
         const endGame = () => {
+            
             ships.forEach(ship => ship.die());
+            ships.forEach(ship => {
+                console.log(ships)
+                console.log(ship)
+                document.getElementById(ships.name).innerHTML = "";
+                // ship.displayNewPoints()
+            })
+         
         }
-
+    
         const displayDamage = () => {
             const randomPosition = Math.floor(Math.random() * ships.length);
             ships[randomPosition].displayNewPoints();
@@ -133,8 +141,8 @@
                 endGame();
                 document.getElementById(`${ships[randomPosition].name}`).innerHTML = "";
             } else if (ships[randomPosition].points <= 0) {
+                document.getElementById(ships[randomPosition].name).innerHTML = "";
                 ships.splice(randomPosition, 1);
-                document.getElementById(`${ships.name}`).innerHTML = "";
             }
         }
 
