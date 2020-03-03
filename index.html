@@ -98,6 +98,7 @@
 
             die() {
                 this.points = 0;
+                document.getElementById(this.name).innerHTML = '';
             }
         }
 
@@ -133,8 +134,8 @@
                 endGame();
                 document.getElementById(`${ships[randomPosition].name}`).innerHTML = "";
             } else if (ships[randomPosition].points <= 0) {
+                document.getElementById(ships[randomPosition].name).innerHTML = "";
                 ships.splice(randomPosition, 1);
-                document.getElementById(`${ships.name}`).innerHTML = "";
             }
         }
 
