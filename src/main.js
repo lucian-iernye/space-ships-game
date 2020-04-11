@@ -1,50 +1,78 @@
-class Ship {
-
-    constructor(name, points, pointsTaken) {
-        this.name = name;
-        this.points = points;
-        this.isAlive = true;
-        this.pointsTaken = pointsTaken;
+const timer = () => {
+  let sec = 0;
+  let timer = setInterval(() => {
+    document.getElementById("safeTimerDisplay").innerHTML = "00:" + sec;
+    sec++;
+    if (allShips[0].HP <= 0) {
+      let score = sec - 1;
+      clearInterval(timer);
+      displayScore(score);
     }
+  }, 1000);
+};
 
-    decrement() {
-        this.points = this.points - this.pointsTaken;
+const displayScore = (score) => {
+  document.getElementById("score").innerHTML = +score;
+  console.log(score);
+};
+
+import MotherShip, { DefenceShip, AttackShip } from "./data/Ships.js";
+
+let allShips = [];
+
+const createShips = (motherNum, defenceNum, attackNum) => {
+  for (let index = 0; index < motherNum; index++) {
+    allShips.push(new MotherShip("Mothership", 100, 9, "./mothership.png"));
+  }
+
+  for (let index = 0; index < defenceNum; index++) {
+    allShips.push(new DefenceShip("Defence ship", 80, 10, "./defenseship.png"));
+  }
+
+  for (let index = 0; index < attackNum; index++) {
+    allShips.push(new AttackShip("Attack ship", 45, 12, "./attackship.png"));
+  }
+};
+
+createShips(1, 5, 8);
+
+const randomize = (allShips) => {
+  let rand = Math.random();
+  let totalShips = allShips.length;
+  let randIndex = Math.floor(rand * totalShips);
+  let randomShip = allShips[randIndex];
+  return randomShip;
+};
+
+const renderShips = () => {
+  let alienShips = document.getElementById("ships");
+  alienShips.innerHTML = "";
+  allShips.forEach((i) => (alienShips.innerHTML += i.render()));
+};
+
+// const resetGame = () => {
+//   allShips = [];
+//   createShips(1, 5, 8);
+//   renderShips();
+// };
+
+const destroy = () => {
+  randomize(allShips).hit();
+  // console.log(randomize(allShips).hit());
+  renderShips();
+
+  for (let index = 0; index < allShips.length; index++) {
+    if (allShips[0].HP === 0) {
+      // resetGame();
+      return alert("You won ! The Nology galaxy is saved now !");
     }
-
-    displayNewPoints() {
-        this.decrement();
-        document.getElementById(this.name).innerHTML = `${this.name} : ${this.points}`;
+    if (allShips[index].HP <= 0) {
+      allShips.splice(index, 1);
     }
-}
+  }
+};
 
-const motherShip = new Ship("MotherShip", 100, 9);
+let burn = document.getElementById("burn");
+burn.addEventListener("click", destroy);
 
-const defenseShipOne = new Ship("Defence-Ship-One", 80, 10);
-const defenseShipTwo = new Ship("Defence-Ship-Two", 80, 10);
-const defenseShipThree = new Ship("Defence-Ship-Three", 80, 10);
-const defenseShipFour = new Ship("Defence-Ship-Four", 80, 10);
-const defenseShipFive = new Ship("Defence-Ship-Five", 80, 10);
-
-const attackShipOne = new Ship("Attack-Ship-One", 45, 12);
-const attackShipTwo = new Ship("Attack-Ship-Two", 45, 12);
-const attackShipThree = new Ship("Attack-Ship-Three", 45, 12);
-const attackShipFour = new Ship("Attack-Ship-Four", 45, 12);
-const attackShipFive = new Ship("Attack-Ship-Five", 45, 12);
-const attackShipSix = new Ship("Attack-Ship-Six", 45, 12);
-const attackShipSeven = new Ship("Attack-Ship-Seven", 45, 12);
-const attackShipEight = new Ship("Attack-Ship-Eight", 45, 12);
-
-const ships = [motherShip, defenseShipOne, defenseShipTwo, defenseShipThree, defenseShipFour, defenseShipFive, attackShipOne, attackShipTwo, attackShipThree, attackShipFour, attackShipFive, attackShipSix, attackShipSeven, attackShipOne];
-
-ships.forEach(ship => ship.displayNewPoints());
-
-const displayDamage = () => {
-    const randomPosition = Math.floor(Math.random() * ships.length);
-    ships[randomPosition].displayNewPoints();
-    if(ships[randomPosition].points <= 0) {
-        document.getElementById(`${ships[randomPosition].name}`).innerHTML = "";
-        ships.splice(randomPosition, 1);
-    }
-}
-
-document.getElementById("attack").addEventListener("click", displayDamage);
+renderShips();
